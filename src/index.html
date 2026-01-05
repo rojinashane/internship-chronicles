@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="src./output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Behind the Desk | Blogs</title>
+  <style>
+    /* Fade-in animations */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      50% {
+        opacity: 0.5;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .fade-in-bg {
+      opacity: 0;
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-in-text {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards 0.5s;
+    }
+
+    /* Navbar underline animation */
+    .nav-link::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 0;
+      background-color: #6E8E59;
+      transition: width 0.3s ease-in-out;
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active-link::after {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="scroll-smooth bg-gray-100">
+
+  <!-- Navbar -->
+  <nav id="navbar" class="sticky top-0 z-50 bg-[#F5F5F5] shadow-md transition-all duration-500 ease-in-out">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between py-4 transition-all duration-500">
+        <a href="#" class="flex items-center">
+          <span class="text-black text-xl md:text-2xl font-semibold">Behind the Desk</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-6 relative">
+          <ul class="flex space-x-6 relative" id="nav-links">
+            <li><a href="index.html" class="nav-link text-black hover:text-gray-400 relative">Home</a></li>
+            <li><a href="weekone.html" class="nav-link text-black hover:text-gray-400 relative">Blogs</a></li>
+            <li><a href="gallery.html" class="nav-link text-black hover:text-gray-400 relative">Gallery</a></li>
+            <li><a href="about.html" class="nav-link text-black hover:text-gray-400 relative">About The Intern</a></li>
+          </ul>
+        </div>
+        <button id="nav-toggle" class="md:hidden text-black focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu"
+    class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform translate-x-full md:hidden transition-transform duration-300 ease-in-out">
+    <button id="close-menu" class="p-4 text-black focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <ul class="flex flex-col space-y-4 p-4">
+      <li><a href="index.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">Home</a></li>
+      <li><a href="weekone.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">Blogs</a></li>
+      <li><a href="gallery.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">Gallery</a></li>
+      <li><a href="about.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">About</a></li>
+    </ul>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const navbar = document.getElementById("navbar");
+      const navToggle = document.getElementById("nav-toggle");
+      const closeMenu = document.getElementById("close-menu");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add("py-2", "shadow-lg", "bg-[#CAE0BC]");
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.add("py-4");
+          navbar.classList.remove("py-2", "shadow-lg", "bg-[#CAE0BC]");
+        }
+      });
+
+      navToggle.addEventListener("click", function () {
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenu.classList.add("translate-x-0");
+      });
+
+      closeMenu.addEventListener("click", function () {
+        mobileMenu.classList.add("translate-x-full");
+        mobileMenu.classList.remove("translate-x-0");
+      });
+
+      function setActiveLink() {
+        const currentPath = window.location.pathname.split("/").pop();
+        navLinks.forEach(link => {
+          if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active-link");
+          } else {
+            link.classList.remove("active-link");
+          }
+        });
+      }
+      setActiveLink();
+    });
+  </script>
+
+  <!-- Hero Section -->
+  <section class="relative w-full h-screen bg-cover bg-center fade-in-bg" style="background-image: url('hero.jpg'); background-attachment: fixed;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 fade-in-text">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">Behind the Desk: Internship Chronicles</h1>
+      <p class="text-lg sm:text-xl md:text-2xl text-white mb-8">Where Learning Meets Experience</p>
+      <a href="weekone.html" 
+   class="mt-6 inline-block px-6 py-3 border-2 border-[#6E8E59] text-[#6E8E59] text-lg font-medium rounded-full shadow-md 
+          bg-transparent hover:bg-[#6E8E59] hover:text-white transition">
+  READ BLOG
+</a>
+    </div>
+  </section>
+
+  <!-- Logos Section (overlaps hero) -->
+  <section class="relative w-full mx-auto px-6 py-12 -mt-20 z-20 flex mb-12 justify-center space-x-12 bg-white rounded-xl shadow-xl animate-fade-in-up">
+    <img src="deped.png" alt="DepEd Logo" class="w-28 h-28 md:w-36 md:h-36 object-contain">
+    <img src="sdosor.png" alt="DepEd Sorsogon Logo" class="w-28 h-28 md:w-36 md:h-36 object-contain rounded-full">
+  </section>
+
+  <!-- Mission, Vision, Core Values (overlaps logos) -->
+  <section class="relative w-full px-6 py-16 -mt-16 z-30 bg-white rounded-t-3xl shadow-lg animate-fade-in-up">
+    <div class="flex flex-col items-center justify-center text-center mb-8">
+  <h2 class="text-3xl md:text-4xl font-bold text-[#6E8E59]">Department of Education</h2>
+  <h3 class="text-3xl md:text-4xl font-bold text-[#6E8E59]">Schools Division Office of Sorsogon City</h3>
+</div>
+
+
+    <div class="mb-6 max-w-3xl mx-auto text-center">
+      <h3 class="text-2xl font-semibold mb-2">Mission</h3>
+      <p class="text-gray-700 leading-relaxed">
+        To protect and promote the right of every Filipino to quality, equitable, culture-based, and complete basic education where:
+        <br><br>
+        • Students learn in a child-friendly, gender-sensitive, safe, and motivating environment.<br>
+        • Teachers facilitate learning and constantly nurture every learner.<br>
+        • Administrators and staff ensure an enabling and supportive environment.<br>
+        • Family, community, and stakeholders share responsibility for developing life-long learners.
+      </p>
+    </div>
+
+    <div class="mb-6 max-w-3xl mx-auto text-center">
+      <h3 class="text-2xl font-semibold mb-2">Vision</h3>
+      <p class="text-gray-700 leading-relaxed">
+        We dream of Filipinos who passionately love their country and whose values and competencies enable them to realize their full potential and contribute meaningfully to building the nation.<br><br>
+        As a learner-centered public institution, the Department of Education continuously improves itself to better serve stakeholders.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto text-center">
+      <h3 class="text-2xl font-semibold mb-2">Core Values</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Maka-Diyos, Maka-Tao, Makakalikasan, at Makabansa
+      </p>
+    </div>
+  </section>
+
+  <!-- Photos Section -->
+  <section class="w-full py-12 px-6 bg-white animate-fade-in-up">
+    <div class="container mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-[#6E8E59]">Glimpses of the Schools Division of Sorsogon City in action</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div class="relative group overflow-hidden rounded-lg shadow-lg">
+        <img src="w6/9.jpg" alt="Photo 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      </div>
+      <div class="relative group overflow-hidden rounded-lg shadow-lg">
+        <img src="w6/17.jpg" alt="Photo 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      </div>
+      <div class="relative group overflow-hidden rounded-lg shadow-lg">
+        <img src="w1/14.jpg" alt="Photo 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      </div>
+      <div class="relative group overflow-hidden rounded-lg shadow-lg">
+        <img src="w5/8.jpg" alt="Photo 4" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      </div>
+    </div>
+  </section>
+
+<!-- Two-Column Section -->
+<section class="container mx-auto px-4 md:px-20 py-16">
+  <div class="flex flex-col lg:flex-row items-center gap-8">
+
+    <!-- Left Side: Text -->
+    <div class="lg:w-1/2 text-gray-800">
+      <h2 class="text-3xl md:text-4xl font-bold text-[#6E8E59] mb-4">Experience Highlights</h2>
+      <p class="mb-4 leading-relaxed">
+        During our internship, we engaged in various tasks that strengthened our skills and understanding of office operations. 
+        We assisted in IT support, document digitization, and collaborated with different departments to ensure smooth workflow.
+      </p>
+      <p class="leading-relaxed">
+        This experience allowed us to apply our academic knowledge in real-world scenarios, learn from professionals, and understand the importance of teamwork and dedication.
+      </p>
+    </div>
+
+    <!-- Right Side: Photo Carousel -->
+    <div class="lg:w-1/2 relative">
+      <div id="carousel" class="overflow-hidden rounded-lg shadow-lg">
+        <div class="flex transition-transform duration-500" id="carousel-inner">
+          <img src="w12/26.jpg" alt="Slide 2" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+          <img src="w12/23.jpg" alt="Slide 1" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+          <img src="w12/34.jpg" alt="Slide 5" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+          <img src="w12/30.jpg" alt="Slide 3" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+          <img src="w12/31.jpg" alt="Slide 4" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+          <img src="w12/35.jpg" alt="Slide 5" class="w-full flex-shrink-0 object-cover h-80 md:h-96">
+        </div>
+      </div>
+
+      <!-- Carousel Arrows -->
+      <button id="prev-slide" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white text-gray-800 rounded-full p-2 shadow hover:bg-gray-200 transition">
+        ‹
+      </button>
+      <button id="next-slide" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 rounded-full p-2 shadow hover:bg-gray-200 transition">
+        ›
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Carousel Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const carouselInner = document.getElementById("carousel-inner");
+    const slides = carouselInner.children;
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+
+    const prevBtn = document.getElementById("prev-slide");
+    const nextBtn = document.getElementById("next-slide");
+
+    function updateCarousel() {
+      const slideWidth = slides[0].offsetWidth;
+      carouselInner.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+      updateCarousel();
+    });
+
+    // Auto-slide every 2 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+      updateCarousel();
+    }, 2000);  <!-- Updated from 5000 to 2000 -->
+
+    window.addEventListener("resize", updateCarousel);
+  });
+</script>
+
+
+ <footer id="footer"
+    class="relative text-white text-center py-8 sm:py-10 md:py-12 transition-all duration-500 ease-in-out bg-no-repeat bg-cover bg-center
+    bg-gradient-to-r from-[#6E8E59] to-[#CAE0BC] p-4 text-white">
+    <!-- Optional Dark Overlay for Better Text Contrast -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Left Column: Brand & Tagline -->
+        <div class="flex flex-col items-center md:items-start">
+          <a href="#" class="flex items-center mb-4">
+            <span class="text-xl font-semibold">Behind the Desk: Internship Chronicles</span>
+          </a>
+          <p class="text-gray-200 max-w-xs text-center md:text-left">
+            Where Learning Meets Experience
+          </p>
+        </div>
+
+        <!-- Middle Column: Quick Links (Centered Text) -->
+        <div class="text-center">
+          <h3 class="text-lg font-semibold mb-3">Explore</h3>
+          <ul class="space-y-2 text-sm sm:text-base">
+            <li><a href="index.html" class="text-gray-200 hover:text-white transition">Home</a></li>
+            <li><a href="weekone.html" class="text-gray-200 hover:text-white transition">Blogs</a>
+            </li>
+            <li><a href="gallery.html" class="text-gray-200 hover:text-white transition">Gallery</a></li> 
+            <li><a href="about.html" class="text-gray-200 hover:text-white transition">About The Intern</a></li> 
+          </ul>
+        </div>
+
+        <!-- Right Column: Contact & Social -->
+        <div class="text-center md:text-right">
+          <h3 class="text-lg font-semibold mb-3">The Lewis College</h3>
+          <p class="text-gray-200 text-sm sm:text-base">College of Computer Studies</p>
+          <p class="text-gray-200 text-xs sm:text-sm">
+          Rojina Shane Habana
+          </p>
+          <p class="text-gray-200 text-sm sm:text-base">
+            <a href="https://contacts.google.com/rojinashanehabana@thelewiscollege.edu.ph" class="hover:text-white transition">
+              rojinashanehabana@thelewiscollege.edu.ph
+            </a>
+          </p>
+          <p class="text-gray-200 text-sm sm:text-base">+63 946 663 7361</p>
+          <!-- Social Media Links -->
+          <div class="flex justify-center md:justify-end space-x-4 mt-4">
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-facebook fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-twitter fa-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="border-t border-gray-500 mt-8 pt-4">
+        <p class="text-gray-200 text-xs sm:text-sm">
+          © 2025 Behind the Desk: Internship Chronicles . All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Scroll Fade and Padding Adjustment -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const footer = document.getElementById("footer");
+
+      function handleScroll() {
+        const scrollPosition = window.scrollY + window.innerHeight;
+        const footerPosition = document.body.offsetHeight - 100;
+
+        if (scrollPosition >= footerPosition) {
+          footer.style.paddingTop = "50px";
+          footer.style.paddingBottom = "50px";
+          footer.style.opacity = "1";
+        } else {
+          footer.style.paddingTop = "40px";
+          footer.style.paddingBottom = "40px";
+          footer.style.opacity = "0.5";
+        }
+      }
+
+      window.addEventListener("scroll", handleScroll);
+    });
+  </script>
+
+
+
+</body>
+</html>

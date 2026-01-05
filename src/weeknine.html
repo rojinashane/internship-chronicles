@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="src./output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Behind the Desk | Blogs</title>
+  <style>
+    /* Define the animation for text */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      opacity: 0;
+      /* Ensures the text remains hidden initially */
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .nav-link::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 0;
+      background-color: #6E8E59;
+      transition: width 0.3s ease-in-out;
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active-link::after {
+      width: 100%;
+    }
+
+    .week-link-active {
+    background-color: #6E8E59 !important;
+    color: white !important;
+}
+  </style>
+</head>
+
+<body class = "bg-gradient-to-r from-white to-[#CAE0BC]">
+
+  <!-- Sticky Navigation Bar -->
+  <!-- Sticky Navigation Bar -->
+  <nav id="navbar" class="sticky top-0 z-50 bg-[#F5F5F5] shadow-md transition-all duration-500 ease-in-out">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between py-4 transition-all duration-500">
+
+        <!-- Logo & Brand Name -->
+        <a href="#" class="flex items-center">
+          <span class="text-black text-xl md:text-2xl font-semibold">Behind the Desk</span>
+        </a>
+
+        <!-- Desktop Menu + Book Now Button -->
+        <div class="hidden md:flex items-center space-x-6 relative">
+          <ul class="flex space-x-6 relative" id="nav-links">
+            <li><a href="index.html" class="nav-link text-black hover:text-gray-400 transition relative">Home</a></li>
+            <li><a href="weekone.html"
+                class="nav-link text-black hover:text-gray-400 transition relative">Blogs</a></li>
+            <li><a href="gallery.html"
+                class="nav-link text-black hover:text-gray-400 transition relative">Gallery</a></li>
+                <li><a href="about.html"
+                class="nav-link text-black hover:text-gray-400 transition relative">About The Intern</a></li>
+          </ul>
+          <!-- Highlighted Book Now Button -->
+          
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="nav-toggle" class="md:hidden text-black focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Sidebar Menu -->
+  <div id="mobile-menu"
+    class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform translate-x-full md:hidden transition-transform duration-300 ease-in-out">
+    <!-- Close Button -->
+    <button id="close-menu" class="p-4 text-black focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Mobile Navigation Links -->
+    <ul class="flex flex-col space-y-4 p-4">
+      <li><a href="index.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">Home</a></li>
+      <li><a href="weekone.html" class="block text-black hover:bg-gray-100 px-4 py-2 transition">Blogs</a>
+      </li>
+      <li><a href="gallery.html"
+          class="block text-black hover:bg-gray-100 px-4 py-2 transition">Gallery</a></li>
+      <li><a href="about.html"
+          class="block text-black hover:bg-gray-100 px-4 py-2 transition">About</a></li>
+
+    </ul>
+  </div>
+
+  <!-- JavaScript for Navbar Animation, Active Link Highlight & Mobile Menu -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const navbar = document.getElementById("navbar");
+      const navToggle = document.getElementById("nav-toggle");
+      const closeMenu = document.getElementById("close-menu");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add("py-2", "shadow-lg", "bg-[#CAE0BC]");
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.add("py-4");
+          navbar.classList.remove("py-2", "shadow-lg", "bg-[#CAE0BC]");
+        }
+      });
+
+      // Open Mobile Menu
+      navToggle.addEventListener("click", function () {
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenu.classList.add("translate-x-0");
+      });
+
+      // Close Mobile Menu
+      closeMenu.addEventListener("click", function () {
+        mobileMenu.classList.add("translate-x-full");
+        mobileMenu.classList.remove("translate-x-0");
+      });
+
+      // Active Link Highlight
+      function setActiveLink() {
+        const currentPath = window.location.pathname.split("/").pop();
+        navLinks.forEach(link => {
+          if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active-link");
+          } else {
+            link.classList.remove("active-link");
+          }
+        });
+      }
+
+      setActiveLink();
+    });
+  </script>
+
+
+
+
+<section class="container mx-auto px-4 md:px-20 py-10">
+  <section class="py-16 text-center animate-fade-in-up">
+  <h2 class="text-4xl md:text-5xl font-bold text-[#6E8E59]">Strengthening Skills in the Quiet Moments</h2>
+  <h3 class="text-gray-600 mt-2">Week Nine</h3>
+  </section>
+
+  <!-- Blog Image -->
+  <div class="flex justify-center mb-8">
+    <img src="w9/8.jpg" alt="Week 1 Internship" class="rounded shadow-md max-w-full md:max-w-2xl mb-4">
+  </div>
+
+  <!-- Blog Content -->
+  <div class="max-w-3xl mx-auto space-y-6 text-justify text-gray-800 leading-relaxed">
+    <p>
+        This week wasn’t very busy. I focused on my usual tasks in the ASDS Office, as I am now the only ASDS staffin the office. 
+        My responsibilities included sorting and routing documents, applying signature stamps, and updating and following 
+        up on travel-related documents. Even though the tasks were routine, they allowed me to further strengthen my organizational skills and attention to detail.
+    </p>
+
+    <p>
+        Reflecting on the week, I realized that even during quieter periods, staying diligent and consistent in handling office responsibilities is just as 
+        important as managing big events. Every task, no matter how small, contributes to the smooth operation of the office.
+    </p>
+  </div>
+</section>
+
+
+
+ <!-- Prev / Next Buttons -->
+  <section class="w-full py-8 flex justify-center space-x-4">
+    <!-- Prev Button (Disabled) -->
+    <a href="weekeight.html"
+      class="px-6 py-2 bg-[#6E8E59] text-white font-semibold rounded-lg hover:bg-[#CAE0BC] hover:text-[#6E8E59] transition">
+      Prev.
+    </a>
+
+    <!-- Next Button -->
+    <a href="weekten.html"
+      class="px-6 py-2 bg-[#6E8E59] text-white font-semibold rounded-lg hover:bg-[#CAE0BC] hover:text-[#6E8E59] transition">
+      Next
+    </a>
+  </section>
+
+
+
+  
+  <footer id="footer"
+    class="relative text-white text-center py-8 sm:py-10 md:py-12 transition-all duration-500 ease-in-out bg-no-repeat bg-cover bg-center
+    bg-gradient-to-r from-[#6E8E59] to-[#CAE0BC] p-4 text-white">
+    <!-- Optional Dark Overlay for Better Text Contrast -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Left Column: Brand & Tagline -->
+        <div class="flex flex-col items-center md:items-start">
+          <a href="#" class="flex items-center mb-4">
+            <span class="text-xl font-semibold">Behind the Desk: Internship Chronicles</span>
+          </a>
+          <p class="text-gray-200 max-w-xs text-center md:text-left">
+            Where Learning Meets Experience
+          </p>
+        </div>
+
+        <!-- Middle Column: Quick Links (Centered Text) -->
+        <div class="text-center">
+          <h3 class="text-lg font-semibold mb-3">Explore</h3>
+          <ul class="space-y-2 text-sm sm:text-base">
+            <li><a href="index.html" class="text-gray-200 hover:text-white transition">Home</a></li>
+            <li><a href="weekone.html" class="text-gray-200 hover:text-white transition">Blogs</a>
+            </li>
+            <li><a href="gallery.html" class="text-gray-200 hover:text-white transition">Gallery</a></li> 
+            <li><a href="about.html" class="text-gray-200 hover:text-white transition">About The Intern</a></li> 
+          </ul>
+        </div>
+
+        <!-- Right Column: Contact & Social -->
+        <div class="text-center md:text-right">
+          <h3 class="text-lg font-semibold mb-3">The Lewis College</h3>
+          <p class="text-gray-200 text-sm sm:text-base">College of Computer Studies</p>
+          <p class="text-gray-200 text-xs sm:text-sm">
+          Rojina Shane Habana
+          </p>
+          <p class="text-gray-200 text-sm sm:text-base">
+            <a href="https://contacts.google.com/rojinashanehabana@thelewiscollege.edu.ph" class="hover:text-white transition">
+              rojinashanehabana@thelewiscollege.edu.ph
+            </a>
+          </p>
+          <p class="text-gray-200 text-sm sm:text-base">+63 946 663 7361</p>
+          <!-- Social Media Links -->
+          <div class="flex justify-center md:justify-end space-x-4 mt-4">
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-facebook fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-white transition">
+              <i class="fa-brands fa-twitter fa-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="border-t border-gray-500 mt-8 pt-4">
+        <p class="text-gray-200 text-xs sm:text-sm">
+          © 2025 Behind the Desk: Internship Chronicles . All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Scroll Fade and Padding Adjustment -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const footer = document.getElementById("footer");
+
+      function handleScroll() {
+        const scrollPosition = window.scrollY + window.innerHeight;
+        const footerPosition = document.body.offsetHeight - 100;
+
+        if (scrollPosition >= footerPosition) {
+          footer.style.paddingTop = "50px";
+          footer.style.paddingBottom = "50px";
+          footer.style.opacity = "1";
+        } else {
+          footer.style.paddingTop = "40px";
+          footer.style.paddingBottom = "40px";
+          footer.style.opacity = "0.5";
+        }
+      }
+
+      window.addEventListener("scroll", handleScroll);
+    });
+  </script>
+
+
+
+
+
+
+</body>
+
+</html>
